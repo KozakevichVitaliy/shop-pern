@@ -1,10 +1,14 @@
 const express = require('express')
 const sequelize = require('./db/dbConnection')
 const env = require('./env')
+const cors = require('cors')
+const associations = require('./db/dbAssociations')
 
 const PORT = env.app.port || 5000
 
 const app = express()
+app.use(cors())
+app.use(express.json())
 
 const start = async () => {
   try {
@@ -16,7 +20,7 @@ const start = async () => {
         console.error('Unable to connect to the database:', err);
       });
 
-    await sequelize.sync()
+    await sequelize.sync({ force: true })
 
     app.listen(PORT, () => console.log(`Server started on port ${env.app.port}`))
   } catch (err) {
