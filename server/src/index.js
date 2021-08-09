@@ -2,6 +2,7 @@ const express = require('express')
 const sequelize = require('./db/dbConnection')
 const env = require('./env')
 const cors = require('cors')
+const router = require('./api/router')
 const associations = require('./db/dbAssociations')
 
 const PORT = env.app.port || 5000
@@ -9,6 +10,7 @@ const PORT = env.app.port || 5000
 const app = express()
 app.use(cors())
 app.use(express.json())
+app.use('/api', router)
 
 const start = async () => {
   try {
